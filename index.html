@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        #main {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            background: #000;
+            color: #fff;
+        }
+
+        #main div {
+            text-align: center;
+            position: relative;
+        }
+
+        #main span {
+            font-size: 16px;
+            font-weight: 700;
+            color: orange;
+        }
+
+        #main span.milliseconds {
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .clock {
+            font-size: 14vw;
+        }
+
+        @media (max-width: 675px) {
+            #main span {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main id="main">
+        <div>
+            <span class="day">Sunday</span>
+            <h1 class="clock">00:00:00</h1>
+            <span class="date">January 1, 2022</span>
+            <span class="milliseconds">00</span>
+        </div>
+    </main>
+
+    <script>
+        const clock = document.querySelector(".clock"),
+            days = document.querySelector(".day"),
+            date = document.querySelector(".date"),
+            milliseconds = document.querySelector(".milliseconds");
+
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        const weeks = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+        const time = () => {
+            const newDate = new Date(),
+                h = newDate.getHours(),
+                m = newDate.getMinutes(),
+                s = newDate.getSeconds(),
+                day = newDate.getDay(),
+                month = newDate.getMonth(),
+                year = newDate.getFullYear(),
+                kun = newDate.getDate(),
+                ms = newDate.getMilliseconds();
+
+            result = [h, m, s].map((item) => item.toString().padStart(2, "0")).join(":");
+            clock.textContent = result;
+            days.textContent = weeks[day];
+            date.textContent = `${months[month]} ${kun}, ${year}`;
+            milliseconds.textContent = ms.toString().padStart(2, "0").slice(0, 2);
+        }
+
+        setInterval(() => {
+            time();
+        }, 1);
+
+    </script>
+</body>
+
+</html>
